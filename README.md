@@ -80,6 +80,8 @@ WebKit launch was attempted but this machine lacks its Linux libraries, so Safar
 
 ## Publication and verification
 
+Revision validation: all four reviewer findings were reproduced and fixed with focused changes to the runner layout/focus and saved-pet guards/status. The rebuilt export passed the typecheck, 14 rule tests, 5 focused Chromium regression checks, all 22 original Chromium interaction checks, and all 16 taste@1 checks. Run `node tests/revision.mjs` after building to repeat the focused regressions. See [revision validation and limitations](artifacts/revision-validation.md), [before-fix evidence](artifacts/revision-before.json), [after-fix evidence](artifacts/revision-after.json), and the required reviewer responses in `.imd-responses.json`. The live API was unreachable during this revision's browser check; it displayed unavailable state and did not block gameplay. WebKit still could not launch because required system libraries are missing. The earlier results above describe the original round, not a new live-hardware observation.
+
 IMD assignment reference: **`3689a751-4d5a-40dc-a80d-ac82dfd51920`**. IMD refused manual publication and explicitly stated that the plane hosts a job website when its job completes. The live URL is therefore pending submission; no separate site/hosting ID was returned. That actual response is recorded in `artifacts/deployment.json`. The complete `dist/` export is the submission artifact for IMD static hosting. No Genesis Code campaign approval or prize eligibility is claimed.
 
 ## Source map and notices

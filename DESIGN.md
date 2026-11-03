@@ -53,6 +53,7 @@ Implemented breakpoints in `src/styles.css`:
 | ≤950px | Five-item bottom navigation; app scroll viewport ends above it, including safe-area inset; 28px main inset |
 | ≤730px | Home stacks; companion information uses two columns where space allows; Shop becomes two columns; title is 28px |
 | ≤480px | 16px main inset; compact two-column stats appear beside care; five care targets stay in one row; My Pet stacks; evolution stages become horizontal rows; runner uses its 500-unit world |
+| ≤390px | Runner overlays hide their decorative pixel icon, use the 20px `--text-lg` heading and 12px 17px panel padding; all instructions and action buttons remain visible inside the trail |
 | ≤350px | Remove the redundant room subtitle and light utility; tighten gaps while preserving all main controls |
 
 The fixed bottom nav occupies its own reserved viewport area, so it cannot cover scrolling text. `overflow-anchor: none` and a route effect reset page scroll and focus the main landmark after hash navigation. Focusable content can scroll normally inside the app. Widths 320, 390, 768 and 1440 were checked across all five routes. These widths are reflow checks, not a native browser zoom certification.
@@ -78,9 +79,11 @@ Controls are 8–10px rounded rectangles, care actions 9–12px, panels 12–15p
 | `Habitat` | `src/components/Habitat.tsx` | `pet`, `night`, `active`, `action`, `paused`, `onPet`; original room, pet touch, care animation, purchased furniture and truthful live breeze. |
 | `PetSprite`, `PixelIcon` | `src/components/PetSprite.tsx`, `PixelIcon.tsx`, `src/art.ts` | Shared safe original SVG artwork. Pet coat/stage/sleep determine the sprite. Decorative SVGs are hidden from assistive technology. |
 | `WheelPanel` | `src/components/WheelPanel.tsx` | Explicit source/freshness, measured time, real units, last-known labels, retry countdown, loading/error/empty states and documented source link. |
-| `Runner` | `src/components/Runner.tsx` | Ready/running/paused/over states, native Start/Jump/Pause/Restart buttons, canvas pointer and keyboard controls, hidden-tab pause. The landscape only runs during play. |
+| `Runner` | `src/components/Runner.tsx` | Ready/running/paused/over states, native Start/Jump/Pause/Restart buttons, canvas pointer and keyboard controls, hidden-tab pause. Both Resume controls return focus to the canvas for Space/Arrow Up play. The landscape only runs during play. |
 | `PetCard` | `src/components/PetCard.tsx` | Actual progress renders into 900×1100 PNG; preview, busy state, errors, download and actual X intent link. |
-| Shop pattern | `src/App.tsx` | Native pressed-state filter buttons; price, owned count, buy/equip state, disabled insufficient-funds explanation and visible item art. |
+| Shop pattern | `src/App.tsx` | Native pressed-state filter buttons; price, owned count, buy/equip state, disabled insufficient-funds explanation and visible item art. Adoption/purchase buttons and identity submission remain blocked until saved-pet loading succeeds; a failed read keeps the record intact for retry. |
+
+The Home save indicator gives save errors priority: an X with “Changes not saved” replaces the success check. It returns to “Saved on this device” after the pending state commits successfully. The existing persistent warning supplies the retry action on all routes, including compact layouts where the header indicator is hidden.
 
 Ambient CSS motion is inside `prefers-reduced-motion: no-preference`; a habitat pause control pauses the app's CSS animations. Active press uses scale 0.96, named transitions are 150ms, and no `transition: all` is used. Action animations also update stats/cooldowns and a polite status region. Canvas motion is essential, user-started gameplay with an explicit pause; reduced motion does not remove the actual game.
 
